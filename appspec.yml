@@ -7,9 +7,7 @@ permissions:
   - object: /home/ubuntu/blogprojectdrf
     owner: ubuntu
     group: ubuntu
-hooks:
- 
-  AfterInstall:
+AfterInstall:
       - location: scripts/instance_os_dependencies.sh
         timeout: 300
         runas: ubuntu
