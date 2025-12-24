@@ -1,30 +1,37 @@
 version: 0.0
 os: linux
-
-files:
+files: 
   - source: /
-    destination: /home/ubuntu/app
-
+    destination: /home/ubuntu/blogprojectdrf
+permissions:
+  - object: /home/ubuntu/blogprojectdrf
+    owner: ubuntu
+    group: ubuntu
 hooks:
-  ApplicationStop:
-    - location: scripts/stop_server.sh
-      timeout: 300
-      runas: ubuntu
-
   BeforeInstall:
-    - location: scripts/before_install.sh
-      timeout: 300
-      runas: ubuntu
-
+      - location: scripts/clean_instance.sh
+        timeout: 300
+        runas: ubuntu
   AfterInstall:
-    - location: scripts/after_install.sh
-      timeout: 300
-      runas: ubuntu
-
+      - location: scripts/instance_os_dependencies.sh
+        timeout: 300
+        runas: ubuntu
+      - location: scripts/python_dependencies.sh
+        timeout: 300
+        runas: ubuntu
+      - location: scripts/gunicorn.sh
+        timeout: 300
+        runas: ubuntu
+      - location: scripts/nginx.sh
+        timeout: 300
+        runas: ubuntu
+  ApplicationStop:
+      - location: scripts/stop_app.sh
+        timeout: 300
+        runas: ubuntu
   ApplicationStart:
-    - location: scripts/start_server.sh
-      timeout: 300
-      runas: ubuntu
-
-      
+      - location: scripts/start_app.sh
+        timeout: 300
+        runas: ubuntu
+  
   
